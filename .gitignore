@@ -1,0 +1,12 @@
+.VSCodeCounter/
+.nuget/
+.vs/
+TestResults/
+bin/
+dist/
+obj/
+
+*.DotSettings.user
+*.csproj.user
+*.log
+/Core/deploy.bat
