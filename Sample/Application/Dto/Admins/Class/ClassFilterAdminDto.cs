@@ -1,13 +1,13 @@
 ﻿namespace Sample.Application.Dto.Admins
 {
-    public class TeacherFilterAdminDto : BaseFilterAdminDto<Teacher>
+    public class ClassFilterAdminDto : BaseFilterAdminDto<Class>
     {
         public string? Code { get; set; }
 
         public string? Name { get; set; }
 
         /// <inheritdoc/>
-        public override Task<IQueryable<Teacher>> ToQueryable(IQueryable<Teacher> query, IServiceProvider serviceProvider)
+        public override Task<IQueryable<Class>> ToQueryable(IQueryable<Class> query, IServiceProvider serviceProvider)
         {
             var result = query
                 .WhereIf(Code.IsNotNullOrEmpty(), x => EF.Functions.Like(x.Code, $"%{Code}%"))

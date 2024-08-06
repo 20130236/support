@@ -19,14 +19,14 @@
 
   <ItemGroup>
 	<PackageReference Include="Hangfire.PostgreSql" Version="1.20.9" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
+    <!--<PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.3.0" />-->
+    <!--<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />-->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.18" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+    <!--<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />-->
   </ItemGroup>
 
 </Project>

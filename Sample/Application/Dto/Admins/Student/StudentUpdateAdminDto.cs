@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sample.Application.Dto.Admins.Student
+﻿namespace Sample.Application.Dto.Admins
 {
-    public class StudentUpdateAdminDto
+    [MapToEntity<Student>(true)]
+    public class StudentUpdateAdminDto : BaseDto
     {
+        public string Name { get; set; }
+
+        public Guid ClassId { get; set; }
     }
 }

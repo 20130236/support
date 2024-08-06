@@ -4,9 +4,8 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Hangfire;
 using Hangfire.Dashboard.Management.v2;
+using Hangfire.PostgreSql;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Sample.Infrastructure.DataContext;
 using TripleSix.Core.Appsettings;
 using TripleSix.Core.DataContext;
 using TripleSix.Core.Mappers;
@@ -58,40 +57,40 @@ namespace Sample.WebApi
 
         private static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            BaseValidator.SetupGlobal();
-            BaseValidator.ValidateDtoValidator(DomainAssembly);
-
-            services.AddHttpContextAccessor();
-            services.AddSwagger(configuration);
-            services.AddMvcServices(WebApiAssembly);
-            services.AddAuthentication().AddJwtAccessToken(configuration, GetSigningKey);
-
-            var connectionString = configuration.GetConnectionString("Default");
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-            });
-
-            services.AddHangfireWorker(configuration, (options, setting) =>
-            {
-                options.UseSqlServerStorage(setting.ConnectionString);
-                options.UseManagementPages(WebApiAssembly);
-            });
-
             //BaseValidator.SetupGlobal();
             //BaseValidator.ValidateDtoValidator(DomainAssembly);
-            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-            //services.AddHttpClient();
             //services.AddHttpContextAccessor();
             //services.AddSwagger(configuration);
             //services.AddMvcServices(WebApiAssembly);
-            //services.AddAuthentication().AddJwtAccessToken(configuration);
+            //services.AddAuthentication().AddJwtAccessToken(configuration, GetSigningKey);
+
+            //var connectionString = configuration.GetConnectionString("Default");
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //{
+            //    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            //});
+
             //services.AddHangfireWorker(configuration, (options, setting) =>
             //{
-            //    options.UsePostgreSqlStorage(c => c.UseNpgsqlConnection(setting.ConnectionString));
+            //    options.UseSqlServerStorage(setting.ConnectionString);
             //    options.UseManagementPages(WebApiAssembly);
             //});
+
+            BaseValidator.SetupGlobal();
+            BaseValidator.ValidateDtoValidator(DomainAssembly);
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+            services.AddHttpClient();
+            services.AddHttpContextAccessor();
+            services.AddSwagger(configuration);
+            services.AddMvcServices(WebApiAssembly);
+            services.AddAuthentication().AddJwtAccessToken(configuration);
+            services.AddHangfireWorker(configuration, (options, setting) =>
+            {
+                options.UsePostgreSqlStorage(c => c.UseNpgsqlConnection(setting.ConnectionString));
+                options.UseManagementPages(WebApiAssembly);
+            });
         }
 
         private static void ConfigureApp(this WebApplication app, IConfiguration configuration)

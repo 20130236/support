@@ -5,7 +5,7 @@
     [AdminCreateEndpoint<AccountController, Account, AccountCreateAdminDto>]
     [AdminUpdateEndpoint<AccountController, Account, AccountUpdateAdminDto>]
     [AdminSoftDeleteEndpoint<AccountController, Account>]
-    public class AccountController : AdminController
+    public class AccountController : CommonController
     {
     }
 }

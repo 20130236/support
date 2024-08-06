@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sample.Domain.Entities
+﻿namespace Sample.Domain.Entities
 {
+    [Comment("Lớp học")]
     public class Class : StrongEntity<Class>
     {
-        [Comment("Mã số")]
-        [MaxLength(50)]
+        [Comment("Mã số")]
+        [MaxLength(100)]
         public string Code { get; set; }
 
-        [Comment("Tên gọi")]
-        [MaxLength(250)]
+        [Comment("Tên gọi")]
+        [MaxLength(200)]
         public string Name { get; set; }
 
         public virtual IList<Student>? Students { get; set; }
