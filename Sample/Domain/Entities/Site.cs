@@ -11,8 +11,6 @@
         [MaxLength(200)]
         public string Name { get; set; }
 
-        public virtual IList<Account>? Accounts { get; set; }
-
         /// <inheritdoc/>
         public override void Configure(EntityTypeBuilder<Site> builder)
         {

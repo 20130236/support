@@ -12,8 +12,8 @@ using Sample.Infrastructure.DataContext;
 namespace Sample.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240805110112_Init")]
-    partial class Init
+    [Migration("20240808034713_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,95 @@ namespace Sample.Infrastructure.Migrations
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Sample.Domain.Entities.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CreateAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Thời gian khởi tạo");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasComment("Id người tạo");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Thời gian xóa");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasComment("Mật khẩu");
+
+                    b.Property<string>("RoleCode")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasComment("Mã vai trò");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasComment("Tên vai trò");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasComment("Thời gian chỉnh sửa cuối");
+
+                    b.Property<Guid?>("UpdatorId")
+                        .HasColumnType("uuid")
+                        .HasComment("Id người chỉnh sửa");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasComment("Tên tài khoản");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateAt");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("DeleteAt");
+
+                    b.HasIndex("UpdateAt");
+
+                    b.HasIndex("UpdatorId");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("Account", t =>
+                        {
+                            t.HasComment("Tài khoản");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("653dc4d4-ca05-45ac-83cd-e98fa91b890f"),
+                            Password = "123",
+                            RoleCode = "SV",
+                            RoleName = "Sinh viên",
+                            UserName = "usernameSV"
+                        },
+                        new
+                        {
+                            Id = new Guid("6f6e615e-feeb-40b5-b53c-7f9056082d36"),
+                            Password = "123",
+                            RoleCode = "GV",
+                            RoleName = "Giáo viên",
+                            UserName = "usernameGV"
+                        });
+                });
+
+            modelBuilder.Entity("Sample.Domain.Entities.Class", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,96 +147,6 @@ namespace Sample.Infrastructure.Migrations
                         .HasColumnType("character varying(200)")
                         .HasComment("Tên gọi");
 
-                    b.Property<Guid>("SiteId")
-                        .HasColumnType("uuid")
-                        .HasComment("Id chi nhánh");
-
-                    b.Property<DateTime?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasComment("Thời gian chỉnh sửa cuối");
-
-                    b.Property<Guid?>("UpdatorId")
-                        .HasColumnType("uuid")
-                        .HasComment("Id người chỉnh sửa");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.HasIndex("CreateAt");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleteAt");
-
-                    b.HasIndex("Name");
-
-                    b.HasIndex("SiteId");
-
-                    b.HasIndex("UpdateAt");
-
-                    b.HasIndex("UpdatorId");
-
-                    b.ToTable("Account", t =>
-                        {
-                            t.HasComment("Tài khoản");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("653dc4d4-ca05-45ac-83cd-e98fa91b890f"),
-                            Code = "EM001",
-                            Name = "Nhân Viên 2",
-                            SiteId = new Guid("7a2ed7c2-e6f7-48c1-a86a-aa701aee1e22")
-                        },
-                        new
-                        {
-                            Id = new Guid("6f6e615e-feeb-40b5-b53c-7f9056082d36"),
-                            Code = "EM002",
-                            Name = "Nhân Viên 2",
-                            SiteId = new Guid("7a2ed7c2-e6f7-48c1-a86a-aa701aee1e22")
-                        },
-                        new
-                        {
-                            Id = new Guid("72b44a93-defc-4e24-a466-0d0d36b3669c"),
-                            Code = "EM003",
-                            Name = "Nhân Viên 3",
-                            SiteId = new Guid("3e08cf2e-d8a2-49b5-8663-fa31f0cdd168")
-                        });
-                });
-
-            modelBuilder.Entity("Sample.Domain.Entities.Class", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasComment("Mã số");
-
-                    b.Property<DateTime?>("CreateAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasComment("Thời gian khởi tạo");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasComment("Id người tạo");
-
-                    b.Property<DateTime?>("DeleteAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasComment("Thời gian xóa");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
-                        .HasComment("Tên gọi");
-
                     b.Property<Guid>("TeacherId")
                         .HasColumnType("uuid");
 
@@ -172,13 +171,17 @@ namespace Sample.Infrastructure.Migrations
 
                     b.HasIndex("Name");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherId")
+                        .IsUnique();
 
                     b.HasIndex("UpdateAt");
 
                     b.HasIndex("UpdatorId");
 
-                    b.ToTable("Class");
+                    b.ToTable("Class", t =>
+                        {
+                            t.HasComment("Lớp học");
+                        });
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Site", b =>
@@ -263,12 +266,13 @@ namespace Sample.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("ClassId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasComment("Id lớp học");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasComment("Mã số");
 
                     b.Property<DateTime?>("CreateAt")
@@ -316,7 +320,10 @@ namespace Sample.Infrastructure.Migrations
 
                     b.HasIndex("UpdatorId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", t =>
+                        {
+                            t.HasComment("Sinh viên");
+                        });
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Teacher", b =>
@@ -327,8 +334,8 @@ namespace Sample.Infrastructure.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasComment("Mã số");
 
                     b.Property<DateTime?>("CreateAt")
@@ -345,8 +352,8 @@ namespace Sample.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
                         .HasComment("Tên gọi");
 
                     b.Property<DateTime?>("UpdateAt")
@@ -374,25 +381,17 @@ namespace Sample.Infrastructure.Migrations
 
                     b.HasIndex("UpdatorId");
 
-                    b.ToTable("Teacher");
-                });
-
-            modelBuilder.Entity("Sample.Domain.Entities.Account", b =>
-                {
-                    b.HasOne("Sample.Domain.Entities.Site", "Site")
-                        .WithMany("Accounts")
-                        .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Site");
+                    b.ToTable("Teacher", t =>
+                        {
+                            t.HasComment("Giáo viên");
+                        });
                 });
 
             modelBuilder.Entity("Sample.Domain.Entities.Class", b =>
                 {
                     b.HasOne("Sample.Domain.Entities.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
+                        .WithOne("Class")
+                        .HasForeignKey("Sample.Domain.Entities.Class", "TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -415,9 +414,10 @@ namespace Sample.Infrastructure.Migrations
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("Sample.Domain.Entities.Site", b =>
+            modelBuilder.Entity("Sample.Domain.Entities.Teacher", b =>
                 {
-                    b.Navigation("Accounts");
+                    b.Navigation("Class")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

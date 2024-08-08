@@ -1,10 +1,14 @@
-﻿namespace Sample.WebApi.Controllers.Common
+﻿using Sample.WebApi.Controllers.Admins;
+
+namespace Sample.WebApi.Controllers.Common
 {
     [SwaggerTag("Giáo Viên")]
-    [CommonReadEndpoint<TeacherController, Teacher, TeacherDataAdminDto, TeacherDetailAdminDto, TeacherFilterAdminDto>]
-    [CommonCreateEndpoint<TeacherController, Teacher, TeacherCreateAdminDto>]
-    [CommonUpdateEndpoint<TeacherController, Teacher, TeacherUpdateAdminDto>]
-    [CommonSoftDeleteEndpoint<TeacherController, Teacher>]
+    [AdminReadEndpoint<TeacherController, Teacher, TeacherDataAdminDto, TeacherDetailAdminDto, TeacherFilterAdminDto>]
+    [AdminCreateEndpoint<TeacherController, Teacher, TeacherCreateAdminDto>]
+    [AdminUpdateEndpoint<TeacherController, Teacher, TeacherUpdateAdminDto>]
+    [AdminSoftDeleteEndpoint<TeacherController, Teacher>]
+    //[Authorize(Policy = "TeacherMangement")]
+    //[Authorize(Roles = "GV")]
     public class TeacherController : CommonController
     {
     }

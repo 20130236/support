@@ -14,6 +14,7 @@
         [SwaggerOperation("Lấy danh sách [controller]")]
         public async Task<PagingResult<TItem>> GetPage(TFilter input)
         {
+            var test = await Service.GetFirstByQueryModel(input);
             var result = await Service.GetPageByQueryModel<TItem>(input, input.Page, input.Size);
             return PagingResult(result);
         }

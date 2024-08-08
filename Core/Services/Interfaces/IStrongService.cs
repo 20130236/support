@@ -150,5 +150,6 @@ namespace TripleSix.Core.Services
         /// <param name="id">Id đối tượng.</param>
         /// <returns>Entity đầu tiên thỏa query, nếu không tìm thấy sẽ trả lỗi.</returns>
         Task<TEntity> GetFirstById(Guid id);
+
     }
 }

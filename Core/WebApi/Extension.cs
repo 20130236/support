@@ -1,5 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,6 +78,7 @@ namespace TripleSix.Core.WebApi
             WebApiAppsetting webApiAppsetting,
             Func<IdentityAppsetting, JwtSecurityToken, string?>? getSigningKeyMethod = null)
         {
+            var secretKeyBytes = new HMACSHA512(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication, this is my custom Secret key for authentication"));
             return authenticationBuilder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -87,6 +90,7 @@ namespace TripleSix.Core.WebApi
                     ValidIssuer = identitySetting.Issuer,
                     ValidateAudience = identitySetting.ValidateAudience,
                     ValidAudiences = identitySetting.Audience,
+                    //IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes.Key),
                 };
 
                 var tokenValidator = new IdentitySecurityTokenHandler(identitySetting) { GetSigningKeyMethod = getSigningKeyMethod };

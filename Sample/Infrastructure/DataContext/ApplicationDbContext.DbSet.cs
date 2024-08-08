@@ -11,5 +11,7 @@
         public DbSet<Student> Student { get; set; }
 
         public DbSet<Teacher> Teacher { get; set; }
+
+        public DbSet<RefreshToken> RefreshToken { get; set; }
     }
 }

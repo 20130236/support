@@ -5,5 +5,7 @@
         DbSet<Account> Account { get; set; }
 
         DbSet<Site> Site { get; set; }
+
+        DbSet<RefreshToken> RefreshToken { get; set; }
     }
 }

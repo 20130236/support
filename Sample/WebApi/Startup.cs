@@ -86,6 +86,33 @@ namespace Sample.WebApi
             services.AddSwagger(configuration);
             services.AddMvcServices(WebApiAssembly);
             services.AddAuthentication().AddJwtAccessToken(configuration);
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("StudentMangement", policy =>
+            //    {
+            //        policy.RequireRole("GV");
+            //        policy.RequireAssertion(context =>
+            //        {
+            //            // Retrieve the user's role code from the claims
+            //            var roleCode = context.User.FindFirst(c => c.Type.Equals("RoleCode"))?.Value;
+
+            //            // Check if the role code matches the required role
+            //            return roleCode == "GV";
+            //        });
+            //    });
+            //    options.AddPolicy("TeacherMangement", policy =>
+            //    {
+            //        policy.RequireRole("GV");
+            //        policy.RequireAssertion(context =>
+            //        {
+            //            // Retrieve the user's role code from the claims
+            //            var roleCode = context.User.FindFirst(c => c.Type.Equals("RoleCode"))?.Value;
+
+            //            // Check if the role code matches the required role
+            //            return roleCode == "GV";
+            //        });
+            //    });     
+            //});
             services.AddHangfireWorker(configuration, (options, setting) =>
             {
                 options.UsePostgreSqlStorage(c => c.UseNpgsqlConnection(setting.ConnectionString));

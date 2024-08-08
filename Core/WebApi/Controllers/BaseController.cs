@@ -62,5 +62,12 @@ namespace TripleSix.Core.WebApi
         {
             return new PagingResult<TItem>(data);
         }
+
+        /// <summary>
+        /// Tạo Login result.
+        protected static PagingResult<TItem> LoginResult<TItem>(IPaging<TItem> data)
+        {
+            return new PagingResult<TItem>(data);
+        }
     }
 }

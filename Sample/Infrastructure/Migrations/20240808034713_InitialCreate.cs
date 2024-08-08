@@ -8,11 +8,32 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sample.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Account",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Tên tài khoản"),
+                    Password = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Mật khẩu"),
+                    RoleName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Tên vai trò"),
+                    RoleCode = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Mã vai trò"),
+                    CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian khởi tạo"),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người tạo"),
+                    UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian chỉnh sửa cuối"),
+                    UpdatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người chỉnh sửa"),
+                    DeleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian xóa")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Account", x => x.Id);
+                },
+                comment: "Tài khoản");
+
             migrationBuilder.CreateTable(
                 name: "Site",
                 columns: table => new
@@ -37,8 +58,8 @@ namespace Sample.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "Mã số"),
-                    Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false, comment: "Tên gọi"),
+                    Code = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Mã số"),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Tên gọi"),
                     CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian khởi tạo"),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người tạo"),
                     UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian chỉnh sửa cuối"),
@@ -48,41 +69,16 @@ namespace Sample.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teacher", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Account",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Code = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Mã số"),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Tên gọi"),
-                    SiteId = table.Column<Guid>(type: "uuid", nullable: false, comment: "Id chi nhánh"),
-                    CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian khởi tạo"),
-                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người tạo"),
-                    UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian chỉnh sửa cuối"),
-                    UpdatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người chỉnh sửa"),
-                    DeleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian xóa")
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Account", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Account_Site_SiteId",
-                        column: x => x.SiteId,
-                        principalTable: "Site",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Tài khoản");
+                comment: "Giáo viên");
 
             migrationBuilder.CreateTable(
                 name: "Class",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "Mã số"),
-                    Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false, comment: "Tên gọi"),
+                    Code = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Mã số"),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Tên gọi"),
                     TeacherId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian khởi tạo"),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người tạo"),
@@ -99,16 +95,17 @@ namespace Sample.Infrastructure.Migrations
                         principalTable: "Teacher",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
+                },
+                comment: "Lớp học");
 
             migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "Mã số"),
+                    Code = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Mã số"),
                     Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false, comment: "Tên gọi"),
-                    ClassId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClassId = table.Column<Guid>(type: "uuid", nullable: false, comment: "Id lớp học"),
                     CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian khởi tạo"),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Id người tạo"),
                     UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, comment: "Thời gian chỉnh sửa cuối"),
@@ -124,6 +121,16 @@ namespace Sample.Infrastructure.Migrations
                         principalTable: "Class",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Sinh viên");
+
+            migrationBuilder.InsertData(
+                table: "Account",
+                columns: new[] { "Id", "CreateAt", "CreatorId", "DeleteAt", "Password", "RoleCode", "RoleName", "UpdateAt", "UpdatorId", "UserName" },
+                values: new object[,]
+                {
+                    { new Guid("653dc4d4-ca05-45ac-83cd-e98fa91b890f"), null, null, null, "123", "SV", "Sinh viên", null, null, "usernameSV" },
+                    { new Guid("6f6e615e-feeb-40b5-b53c-7f9056082d36"), null, null, null, "123", "GV", "Giáo viên", null, null, "usernameGV" }
                 });
 
             migrationBuilder.InsertData(
@@ -134,22 +141,6 @@ namespace Sample.Infrastructure.Migrations
                     { new Guid("3e08cf2e-d8a2-49b5-8663-fa31f0cdd168"), "H002", null, null, null, "Quận 6", null, null },
                     { new Guid("7a2ed7c2-e6f7-48c1-a86a-aa701aee1e22"), "H001", null, null, null, "Quận 5", null, null }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Account",
-                columns: new[] { "Id", "Code", "CreateAt", "CreatorId", "DeleteAt", "Name", "SiteId", "UpdateAt", "UpdatorId" },
-                values: new object[,]
-                {
-                    { new Guid("653dc4d4-ca05-45ac-83cd-e98fa91b890f"), "EM001", null, null, null, "Nhân Viên 2", new Guid("7a2ed7c2-e6f7-48c1-a86a-aa701aee1e22"), null, null },
-                    { new Guid("6f6e615e-feeb-40b5-b53c-7f9056082d36"), "EM002", null, null, null, "Nhân Viên 2", new Guid("7a2ed7c2-e6f7-48c1-a86a-aa701aee1e22"), null, null },
-                    { new Guid("72b44a93-defc-4e24-a466-0d0d36b3669c"), "EM003", null, null, null, "Nhân Viên 3", new Guid("3e08cf2e-d8a2-49b5-8663-fa31f0cdd168"), null, null }
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Account_Code",
-                table: "Account",
-                column: "Code",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Account_CreateAt",
@@ -167,16 +158,6 @@ namespace Sample.Infrastructure.Migrations
                 column: "DeleteAt");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Account_Name",
-                table: "Account",
-                column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Account_SiteId",
-                table: "Account",
-                column: "SiteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Account_UpdateAt",
                 table: "Account",
                 column: "UpdateAt");
@@ -185,6 +166,12 @@ namespace Sample.Infrastructure.Migrations
                 name: "IX_Account_UpdatorId",
                 table: "Account",
                 column: "UpdatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Account_UserName",
+                table: "Account",
+                column: "UserName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_Code",
@@ -215,7 +202,8 @@ namespace Sample.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Class_TeacherId",
                 table: "Class",
-                column: "TeacherId");
+                column: "TeacherId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_UpdateAt",
@@ -348,10 +336,10 @@ namespace Sample.Infrastructure.Migrations
                 name: "Account");
 
             migrationBuilder.DropTable(
-                name: "Student");
+                name: "Site");
 
             migrationBuilder.DropTable(
-                name: "Site");
+                name: "Student");
 
             migrationBuilder.DropTable(
                 name: "Class");

@@ -7,6 +7,5 @@
     [AdminSoftDeleteEndpoint<SiteController, Site>]
     public class SiteController : AdminController
     {
-
     }
 }
