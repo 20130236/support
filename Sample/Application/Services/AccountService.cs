@@ -68,12 +68,12 @@ namespace Sample.Application.Services
             return null;
         }
 
-/*        public void createToken(string token)
+        public void CreateToken(string token)
         {
             Db.RefreshToken.Add(new RefreshToken()
             {
                 Token = token
             });
-        }*/
+        }
     }
 }
