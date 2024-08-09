@@ -1,8 +1,10 @@
 ﻿namespace Sample.Application.Dto.Admins
 {
+    [MapToEntity<RefreshToken>]
     public class AccountRefreshTokenAdminDto : BaseDto
     {
-        public string AccessToken { get; set; }
+        [Required]
+        public string Token { get; set; }
 
     }
 }

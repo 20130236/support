@@ -7,9 +7,8 @@ namespace Sample.WebApi.Controllers.Common
     [AdminCreateEndpoint<TeacherController, Teacher, TeacherCreateAdminDto>]
     [AdminUpdateEndpoint<TeacherController, Teacher, TeacherUpdateAdminDto>]
     [AdminSoftDeleteEndpoint<TeacherController, Teacher>]
-    //[Authorize(Policy = "TeacherMangement")]
-    //[Authorize(Roles = "GV")]
-    public class TeacherController : CommonController
+    [RequireScope("GV")]
+    public class TeacherController : AdminController
     {
     }
 }

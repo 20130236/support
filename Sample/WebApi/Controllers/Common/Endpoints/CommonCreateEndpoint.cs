@@ -13,7 +13,7 @@
         [Transactional]
         public async Task<DataResult<Guid>> Create([FromBody] TInput input)
         {
-            var result = await Service.CreateWithMapper(input);
+            var result = await Service.CreateWithMapper(input); 
             return DataResult(result.Id);
         }
     }

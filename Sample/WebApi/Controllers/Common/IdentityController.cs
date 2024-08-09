@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿/*using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +36,7 @@ namespace Sample.WebApi.Controllers.Common
             }
         }
 
-        /*        [HttpPost]
+        *//*        [HttpPost]
                 [SwaggerOperation("Đăng ký [controller]")]
                 public Task<IActionResult> Signup([FromBody] AccountCreateAdminDto input)
                 {
@@ -51,7 +51,7 @@ namespace Sample.WebApi.Controllers.Common
                         var result = Service.CreateWithMapper(input);
                         return DataResult(result.Id);
                     }
-                }*/
+                }*//*
 
         [HttpPost]
         [Route("Create")]
@@ -110,10 +110,10 @@ namespace Sample.WebApi.Controllers.Common
             var secretKeyBytes = Encoding.UTF8.GetBytes("this is my custom Secret key for authentication, this is my custom Secret key for authentication");
             //var secretKeyBytes = Convert.FromBase64String("thisismycustomsecrekeythisismycustomsecretkeykeykeykeykeykeythisismycustomsecrekeythisismycustomsecretkeykeykeykeykeykey");
 
-            /*            // INITIALIZE RSA
+            *//*            // INITIALIZE RSA
                         using var rsa = RSA.Create();
                         // Since the private key starts with "BEGIN PRIVATE KEY" it's PKCS8 encoded
-                        rsa.ImportPkcs8PrivateKey(secretKeyBytes, out _);*/
+                        rsa.ImportPkcs8PrivateKey(secretKeyBytes, out _);*//*
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
@@ -144,10 +144,10 @@ namespace Sample.WebApi.Controllers.Common
             {
                 Subject = new ClaimsIdentity(new[] {
                     new Claim("Id", account.Id.ToString()),
-                    /*new Claim("UserName", account.UserName),
+                    *//*new Claim("UserName", account.UserName),
                     *//*new Claim(ClaimTypes.Role,account.RoleCode),*//*
                     new Claim("RoleCode",account.RoleCode),
-                    new Claim("RoleName", account.RoleName),*/
+                    new Claim("RoleName", account.RoleName),*//*
                     new Claim("TokenId", Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(60),
@@ -173,3 +173,4 @@ namespace Sample.WebApi.Controllers.Common
         }
     }
 }
+*/

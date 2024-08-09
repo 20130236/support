@@ -21,11 +21,11 @@
         public string RoleCode { get; set; } 
     }
 
-    //public class AccountCreateAdminMapAction : IMappingAction<AccountCreateAdminDto, Account>
-    //{
-    //    public void Process(AccountCreateAdminDto source, Account destination, ResolutionContext context)
-    //    {
-    //        destination.RoleName = source.RoleCode.Equals("GV") ? "Giáo viên" : "Sinh viên";
-    //    }
-    //}
+    public class AccountCreateAdminMapAction : IMappingAction<AccountCreateAdminDto, Account>
+    {
+        public void Process(AccountCreateAdminDto source, Account destination, ResolutionContext context)
+        {
+            destination.RoleName = source.RoleCode.Equals("GV") ? "Giáo viên" : "Sinh viên";
+        }
+    }
 }

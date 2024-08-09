@@ -78,7 +78,7 @@ namespace TripleSix.Core.WebApi
             WebApiAppsetting webApiAppsetting,
             Func<IdentityAppsetting, JwtSecurityToken, string?>? getSigningKeyMethod = null)
         {
-            var secretKeyBytes = new HMACSHA512(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication, this is my custom Secret key for authentication"));
+            //var secretKeyBytes = new HMACSHA512(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication, this is my custom Secret key for authentication"));
             return authenticationBuilder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters

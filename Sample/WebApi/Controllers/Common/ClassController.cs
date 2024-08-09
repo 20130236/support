@@ -7,7 +7,8 @@ namespace Sample.WebApi.Controllers.Common
     [AdminCreateEndpoint<ClassController, Class, ClassCreateAdminDto>]
     [AdminUpdateEndpoint<ClassController, Class, ClassUpdateAdminDto>]
     [AdminSoftDeleteEndpoint<ClassController, Class>]
-    public class ClassController : CommonController
+    [RequireScope("SV")]
+    public class ClassController : AdminController
     {
     }
 }

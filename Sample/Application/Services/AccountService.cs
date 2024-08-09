@@ -1,4 +1,5 @@
-﻿using Elastic.Clients.Elasticsearch;
+﻿using Autofac.Core;
+using Elastic.Clients.Elasticsearch;
 using Sample.Application.Dto.Admins;
 
 namespace Sample.Application.Services
@@ -14,6 +15,8 @@ namespace Sample.Application.Services
         bool AvailableRefreshToken(string token);
 
         Account? GetAccountById(string id);
+
+        /*void createToken(string token);*/
     }
 
     public class AccountService : StrongService<Account>, IAccountService
@@ -64,5 +67,13 @@ namespace Sample.Application.Services
             var result = Db.Account.FirstOrDefault(acc => acc.Id.Equals(id));
             return null;
         }
+
+/*        public void createToken(string token)
+        {
+            Db.RefreshToken.Add(new RefreshToken()
+            {
+                Token = token
+            });
+        }*/
     }
 }
